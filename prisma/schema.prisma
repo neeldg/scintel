@@ -27,6 +27,8 @@ model Project {
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   documents   Document[]
+  analyses    Analysis[]
+  comments    Comment[]
   user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -39,5 +41,37 @@ model Document {
   summary         String?  @default("")
   createdAt       DateTime @default(now())
   project         Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model Analysis {
+  id                  String   @id @default(cuid())
+  projectId           String
+  createdAt           DateTime @default(now())
+  projectProfile      String   // JSON
+  scoutedPapers       String   // JSON
+  gaps                String   // JSON
+  directions          String   // JSON
+  criticizedDirections String  // JSON
+  project             Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  comments            Comment[]
+}
+
+enum CommentTargetType {
+  direction
+  gap
+  general
+}
+
+model Comment {
+  id          String           @id @default(cuid())
+  projectId   String
+  analysisId  String?
+  userId      String?
+  targetType  CommentTargetType
+  targetId    String
+  content     String
+  createdAt   DateTime         @default(now())
+  project     Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  analysis    Analysis?        @relation(fields: [analysisId], references: [id], onDelete: Cascade)
 }
 

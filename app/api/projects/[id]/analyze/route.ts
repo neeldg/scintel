@@ -57,7 +57,23 @@ export async function POST(
     // Run full analysis
     const analysisResult = await runFullAnalysis(params.id)
 
-    return NextResponse.json(analysisResult)
+    // Save analysis to database
+    const analysis = await prisma.analysis.create({
+      data: {
+        projectId: params.id,
+        projectProfile: JSON.stringify(analysisResult.projectProfile),
+        scoutedPapers: JSON.stringify(analysisResult.scoutedPapers),
+        gaps: JSON.stringify(analysisResult.gaps),
+        directions: JSON.stringify(analysisResult.directions),
+        criticizedDirections: JSON.stringify(analysisResult.criticizedDirections),
+      },
+    })
+
+    return NextResponse.json({
+      ...analysisResult,
+      id: analysis.id,
+      createdAt: analysis.createdAt,
+    })
   } catch (error) {
     console.error('Error running analysis:', error)
     return NextResponse.json(

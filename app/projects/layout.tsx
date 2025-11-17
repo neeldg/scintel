@@ -3,6 +3,7 @@
 import Sidebar from '@/components/Sidebar'
 import AuthPlaceholder from '@/components/AuthPlaceholder'
 import { UserProvider, useUser } from '@/app/providers'
+import { RoleProvider } from '@/app/role-provider'
 
 function ProjectsLayoutContent({ children }: { children: React.ReactNode }) {
   const { user } = useUser()
@@ -28,7 +29,9 @@ export default function ProjectsLayout({
 }) {
   return (
     <UserProvider>
-      <ProjectsLayoutContent>{children}</ProjectsLayoutContent>
+      <RoleProvider>
+        <ProjectsLayoutContent>{children}</ProjectsLayoutContent>
+      </RoleProvider>
     </UserProvider>
   )
 }

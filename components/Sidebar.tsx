@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useUser } from '@/app/providers'
+import RoleToggle from '@/components/RoleToggle'
 
 export default function Sidebar() {
   const pathname = usePathname()
@@ -15,6 +16,9 @@ export default function Sidebar() {
         {user && (
           <p className="text-sm text-gray-600 mt-1">{user.email}</p>
         )}
+        <div className="mt-4">
+          <RoleToggle />
+        </div>
       </div>
       
       <nav className="flex-1 p-4">
