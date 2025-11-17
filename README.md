@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ResearchNavigator
 
 AI assistant for PhD students and researchers. Upload research artifacts, get AI-powered analysis, literature summaries, gap identification, and research direction suggestions.
@@ -84,3 +85,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 - Add commenting system for research directions
 - Implement proper authentication
 
+=======
+# scintel
+Research guidance and intelligence for labs. Helping supports researchers and PIs document / iterate more efficiently. 
+>>>>>>> 2994bea80da6219bdf138dd4bf0e974f4772c18c
