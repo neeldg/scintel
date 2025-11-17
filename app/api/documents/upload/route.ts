@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { writeFile, mkdir } from 'fs/promises'
 import { join } from 'path'
 import { prisma } from '@/lib/prisma'
+import { processDocument } from '@/lib/documentProcessor'
 
 export async function POST(request: NextRequest) {
   try {
@@ -82,6 +83,12 @@ export async function POST(request: NextRequest) {
         filePath: filePath,
         originalFileName,
       },
+    })
+
+    // Process document asynchronously (extract text, generate summary, embed)
+    // Don't await to avoid blocking the response
+    processDocument(document.id, projectId, filePath).catch((error) => {
+      console.error(`Error processing document ${document.id}:`, error)
     })
 
     return NextResponse.json(document)
